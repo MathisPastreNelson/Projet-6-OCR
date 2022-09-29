@@ -37,4 +37,30 @@ app.use((req, res, next) => {
     console.log('Réponse envoyée avec succès !');
 });
 
+// Les requêtes que je vais devoir renseigner
+// Création d'un compte
+// POST / api / auth / signup
+
+// Login de l'utilisateur
+// POST / api / auth / login
+
+// Récupération de toutes les sauces
+// GET / api / sauces
+
+// Récupération d'une sauce unique
+// GET / api / sauces /: id
+
+// Ajout d'une sauce
+// POST / api / sauces
+
+// Modification d'une sauce
+// PUT / api / sauces /: id
+
+// Suppression d'une sauce
+// DELETE / api / sauces /: id
+
+// Like/Dislike d'une sauce
+// POST / api / sauces /: id / like
+
+
 module.exports = app;
