@@ -1,9 +1,10 @@
 // Importations des node_modules
 const express = require('express');
+const mongoose = require('mongoose');
 
+// Utilisation de express
 const app = express();
 
-const mongoose = require('mongoose');
 
 // Connection à la base de données
 mongoose.connect('mongodb+srv://Mathis:08pj2z380Rc6kKT5@atlascluster.1hkdzyx.mongodb.net/?retryWrites=true&w=majority',
@@ -24,11 +25,6 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     console.log('Requête reçue !');
-    next();
-});
-
-app.use((req, res, next) => {
-    res.status(201);
     next();
 });
 
