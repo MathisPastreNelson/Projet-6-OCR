@@ -1,0 +1,6 @@
+Installation du Front 
+cd Frontend
+npm install
+npm start
+
+Installation du Back
