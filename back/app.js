@@ -7,7 +7,7 @@ const app = express();
 
 
 // Connection à la base de données
-mongoose.connect('mongodb+srv://Mathis:08pj2z380Rc6kKT5@atlascluster.1hkdzyx.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb://127.0.0.1:27017/Piquante',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
