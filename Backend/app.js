@@ -1,6 +1,16 @@
 // Importation des packages
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
+
+// Connection à MongoDB
+mongoose.connect('mongodb+srv://Mathis:So82HFGZ0ZvNRN9c@atlascluster.1hkdzyx.mongodb.net/?retryWrites=true&w=majority',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
     // Permet d'accéder à notre API depuis n'importe quelle origine 
