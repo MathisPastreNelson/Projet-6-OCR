@@ -4,3 +4,6 @@ npm install
 npm start
 
 Installation du Back
+cd Backend
+npm install
+nodemon server
