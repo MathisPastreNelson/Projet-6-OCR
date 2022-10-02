@@ -1,7 +1,16 @@
 // Importation des packages
 const express = require('express');
 const mongoose = require('mongoose');
+
+
+const userRoutes = require("./routes/users")
+const userCtrl = require('./controllers/users');
+
+const router = express.Router();
 const app = express();
+
+// Intercepte 
+app.use(express.json());
 
 // Connection à MongoDB
 mongoose.connect('mongodb+srv://Mathis:So82HFGZ0ZvNRN9c@atlascluster.1hkdzyx.mongodb.net/?retryWrites=true&w=majority',
@@ -27,10 +36,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use((req, res, next) => {
-    res.status(201);
-    next();
-});
 
 app.use((req, res, next) => {
     res.json({ message: 'Votre requête a bien été reçue !' });
@@ -39,6 +44,9 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     console.log('Réponse envoyée avec succès !');
+    next();
 });
+
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
