@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// Assure que l'utilisateur n'existe pas dans la DataBase
 const uniqueValidator = require('mongoose-unique-validator');
 
 // Modèle utilisateur

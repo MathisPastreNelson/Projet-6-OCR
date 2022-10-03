@@ -2,13 +2,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-
+// Routeur
 const userRoutes = require("./routes/users")
 
-const router = express.Router();
 const app = express();
-
-// Intercepte 
 app.use(express.json());
 
 // Connection à MongoDB
