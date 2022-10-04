@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // Importation du modèle Users
 const User = require('../models/users');
 
-// Signup de l'utilisateur
+// Signup de l'utilisateur - Export routes
 exports.signup = (req, res, next) => {
     // Le package bcrpyt permet un cryptage sécurisé
     bcrypt.hash(req.body.password, 10)
@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-// Login de l'utilisateur
+// Login de l'utilisateur - Export routes
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
