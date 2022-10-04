@@ -1,9 +1,25 @@
-Installation du Front 
+Installation du Front  :
 cd Frontend
 npm install
 npm start
 
-Installation du Back
+Installation du Back :
 cd Backend
 npm install
 nodemon server
+
+Pense-bête : 
+Models(schéma) >> controllers(logique) >> routes(direction)
+
+Package utilisé : 
+"bcrypt": 
+"express": 
+"jsonwebtoken"
+"mongoose"
+"mongoose-unique-validator"
+"multer"
+
+Les tokens JWT sont sécurisés parce que :
+- Il n'y a pas de session stockée sur le serveur qui pourrait être détournée.
+- Leur payload encodé peut contenir des données qui permettent de vérifier que l'utilisateur connecté n'utilise pas le token de quelqu'un d'autre.
+- Ils sont très difficiles à fausser sans connaître la clé secrète.
