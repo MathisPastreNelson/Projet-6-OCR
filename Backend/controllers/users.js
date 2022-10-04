@@ -1,11 +1,13 @@
+// Générateur/Vérificateur de Hashage de mot de passe
 const bcrypt = require("bcrypt")
+// Générateur/Vérificateur/Décodeur de JWT
 const jwt = require('jsonwebtoken');
-
+// Importation du modèle Users
 const User = require('../models/users');
 
 // Signup de l'utilisateur
 exports.signup = (req, res, next) => {
-    // Le package bcrpyt permet un cryptage sécurisé du Mot de Passe
+    // Le package bcrpyt permet un cryptage sécurisé
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
