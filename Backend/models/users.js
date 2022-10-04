@@ -1,10 +1,11 @@
+// Appel de Mongoose pour définir le schéma de la DataBase
 const mongoose = require('mongoose');
 // Assure que l'utilisateur n'existe pas dans la DataBase
 const uniqueValidator = require('mongoose-unique-validator');
 
-// Modèle utilisateur
+// Modèle de l'utilisateur
 const userSchema = mongoose.Schema({
-    // On s'assure que l'utilisateur ne partage pas son e-mail avec un autre
+    // On s'assure que l'e-mail est unique
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 });
