@@ -2,8 +2,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-// Routeur
+// Routeurs
 const userRoutes = require("./routes/users")
+const sauceRoutes = require("./routes/sauces")
 
 const app = express();
 app.use(express.json());

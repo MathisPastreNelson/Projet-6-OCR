@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // Importation du modèle Users
 const User = require('../models/users');
 
-// Signup de l'utilisateur - Export routes
+// Signup de l'utilisateur - Exporté dans routes
 exports.signup = (req, res, next) => {
     // Le package bcrpyt permet un cryptage sécurisé
     bcrypt.hash(req.body.password, 10)
@@ -21,7 +21,7 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-// Login de l'utilisateur - Export routes
+// Login de l'utilisateur - Exporté dans routes
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -31,7 +31,9 @@ exports.login = (req, res, next) => {
             // Compare le Password reçu avec le hash dans la base de données
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
+                    // Si le Password est invalide
                     if (!valid) {
+                        // console.log(req.body);
                         return res.status(401).json({ error: 'Mot de passe incorrect !' });
                     }
                     res.status(200).json({
@@ -42,6 +44,7 @@ exports.login = (req, res, next) => {
                             { expiresIn: '24h' }
                         )
                     });
+                    // console.log(req.body);
                 })
                 .catch(error => res.status(500).json({ error }));
         })
