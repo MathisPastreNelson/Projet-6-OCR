@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt")
 // Générateur/Vérificateur/Décodeur de JWT
 const jwt = require('jsonwebtoken');
-// Importation du modèle Users
+// Importation du modèle User
 const User = require('../models/users');
 
 // Signup de l'utilisateur - Exporté dans routes

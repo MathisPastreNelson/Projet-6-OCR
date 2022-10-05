@@ -3,19 +3,29 @@ const mongoose = require('mongoose');
 
 // Modèle de sauce
 const sauceSchema = mongoose.Schema({
-    // userId: String — l'identifiant MongoDB unique de l'utilisateur qui a créé la
-    // sauce
-    //  name: String — nom de la sauce
-    //  manufacturer: String — fabricant de la sauce
-    //  description: String — description de la sauce
-    // mainPepper: String — le principal ingrédient épicé de la sauce
-    //  imageUrl: String — l'URL de l'image de la sauce téléchargée par l'utilisateur
-    //  heat: Number — nombre entre 1 et 10 décrivant la sauce
-    //  likes: Number — nombre d'utilisateurs qui aiment (= likent) la sauce
-    //  dislikes: Number — nombre d'utilisateurs qui n'aiment pas(= dislike) la
-    // sauce
-    //  usersLiked: ["String <userId>"] — tableau des identifiants des utilisateurs
-    // qui ont aimé(= liked) la sauce
-    //  usersDisliked: ["String <userId>"] — tableau des identifiants des
-    // utilisateurs qui n'ont pas aimé (= disliked) la sauce
+    // L'identifiant unique de l'utilisateur 
+    userId: { type: String, required: true, unique: true },
+    // Nom de la sauce
+    name: { type: String, required: true },
+    // Fabricant de la sauce
+    manufacturer: { type: String, required: true },
+    // Description de la sauce
+    description: { type: String, required: true },
+    // Le principal ingrédient épicé de la sauce,
+    mainPepper: { type: String, required: true },
+    // l'URL de l'image de la sauce téléchargée par l'utilisateur
+    imageUrl: { type: String, required: true },
+    // Nombre entre 1 et 10 décrivant la sauce
+    heat: { type: Number, required: true },
+    // Nombre d'utilisateurs qui aiment la sauce
+    likes: { type: Number },
+    // nombre d'utilisateurs qui n'aiment pas la sauce
+    dislikes: { type: Number },
+    // Tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
+    usersLiked: { type: [String] },  //userId
+    // Tableau des identifiants de utilisateurs qui n'ont pas aimé (= disliked) la sauce
+    usersDisliked: { type: [String] }  //userId
 });
+
+// Exporté dans controllers
+module.exports = mongoose.model('Sauce', sauceSchema);

@@ -15,9 +15,11 @@ const storage = multer.diskStorage({
     filename: (req, file, callback) => {
         const name = file.originalname.split(' ').join('_');
         const extension = MIME_TYPES[file.mimetype];
+        // Création du filename + timestamp + . + extension du fichier
         callback(null, name + Date.now() + '.' + extension);
     }
 });
+console.log(extension)
 
-// Sa méthode single() crée un middleware qui capture les fichiers d'un certain type (passé en argument), et les enregistre au système de fichiers du serveur à l'aide du storage configuré.
+// Exportation du middleware MULTER, on lui passe l'objet stocké, la méthode single() car c'est un fichier unique et on précise que c'est une image
 module.exports = multer({ storage: storage }).single('image');
