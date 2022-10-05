@@ -1,4 +1,4 @@
-// Module qui permet à nodeJS de se comporté comme un serveur
+// Modules qui permet à nodeJS de se comporté comme un serveur
 const http = require('http');
 const app = require('./app')
 

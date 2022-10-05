@@ -1,2 +1,2 @@
 // Importation du modèle Sauce
-const User = require('../models/users');
+const Sauce = require('../models/sauces');

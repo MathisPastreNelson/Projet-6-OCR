@@ -1,5 +1,6 @@
-// Importation des packages
+// La variable express nous permettra d'utiliser les fonctionnalités du module Express. 
 const express = require('express');
+// La variable mongoose nous permettra d'utiliser les fonctionnalités du module mongoose.
 const mongoose = require('mongoose');
 
 // Routeurs
