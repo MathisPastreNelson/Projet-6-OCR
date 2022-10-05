@@ -19,7 +19,7 @@ const sauceSchema = mongoose.Schema({
     heat: { type: Number, required: true },
     // Nombre d'utilisateurs qui aiment la sauce
     likes: { type: Number },
-    // nombre d'utilisateurs qui n'aiment pas la sauce
+    // Nombre d'utilisateurs qui n'aiment pas la sauce
     dislikes: { type: Number },
     // Tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
     usersLiked: { type: [String] },  //userId

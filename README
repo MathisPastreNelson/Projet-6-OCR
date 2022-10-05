@@ -25,8 +25,7 @@ Packages utilisés dans le projet :
 
 Définition des JWT :
 Un JSON Web Token est un access token Les JSON Web Token sont particulièrement appréciés pour les opérations d’identification.
-Les messages courts peuvent être chiffrés et fournissent alors des informations sûres sur l’identité de l’expéditeur et si celui-ci
-dispose des droits d’accès requis.
+Les messages courts peuvent être chiffrés et fournissent alors des informations sûres sur l’identité de l’expéditeur et si celui-ci dispose des droits d’accès requis.
 
 Les tokens JWT sont sécurisés parce que :
 - Il n'y a pas de session stockée sur le serveur qui pourrait être détournée.
