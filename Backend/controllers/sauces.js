@@ -3,15 +3,14 @@ const Sauce = require('../models/sauces');
 
 
 exports.createSauce = (req, res, next) => {
-    const sauceObject = JSON.parse(req.body.sauce);
+    // Les données du formulaire de création vont dans une nouvelle sauce
+    const sauceObject = JSON.parse(req.body);
+    delete sauceObject._id;
     const sauce = new Sauce({
         ...sauceObject,
-        likes: 0,
-        dislikes: 0,
-        usersLiked: [],
-        usersDisliked: []
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    console.log(Sauce)
+    // Je sauvegarde la nouvelle sauce dans DB
     sauce.save().then(
         () => {
             res.status(201).json({
@@ -25,7 +24,6 @@ exports.createSauce = (req, res, next) => {
             });
         }
     );
-    console.log("test")
 };
 
 exports.getOneSauce = (req, res, next) => {
@@ -54,7 +52,7 @@ exports.modifySauce = (req, res, next) => {
         price: req.body.price,
         userId: req.body.userId
     });
-    sauce.updateOne({ _id: req.params.id }, thing).then(
+    sauce.updateOne({ _id: req.params.id }, sauce).then(
         () => {
             res.status(201).json({
                 message: 'Sauce mise à jour !!'

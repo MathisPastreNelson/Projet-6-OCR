@@ -1,5 +1,6 @@
 const multer = require('multer');
 
+// Dictionnaire :
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
@@ -13,7 +14,9 @@ const storage = multer.diskStorage({
     },
     // La fonction filename indique à multer d'utiliser le nom d'origine, de remplacer les espaces par des underscores et d'ajouter un timestamp Date.now()
     filename: (req, file, callback) => {
+        // Prend le nom original du fichier enlève les espaces et ajoute _ entre les mots
         const name = file.originalname.split(' ').join('_');
+        // L'extension du fichier sera traduit en élément du dictionnaire
         const extension = MIME_TYPES[file.mimetype];
         // Création du filename + timestamp + . + extension du fichier
         callback(null, name + Date.now() + '.' + extension);
