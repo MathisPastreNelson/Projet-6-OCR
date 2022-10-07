@@ -4,7 +4,9 @@ const Sauce = require('../models/sauces');
 
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
+    // const sauceObject = JSON.parse(req.body);
     const sauceObject = JSON.parse(req.body);
+    console.log(sauceObject._id)
     delete sauceObject._id;
     const sauce = new Sauce({
         ...sauceObject,
