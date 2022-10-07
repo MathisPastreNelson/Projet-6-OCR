@@ -28,7 +28,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     // Permet d'envoyer des requêtes avec les méthodes mentionnées
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    console.log("requete =")
     console.log(req.body)
+    console.log("réponse =")
+    console.log(res.path)
     next();
 });
 
