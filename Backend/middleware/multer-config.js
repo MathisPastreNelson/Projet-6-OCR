@@ -22,7 +22,6 @@ const storage = multer.diskStorage({
         callback(null, name + '_' + Date.now() + extension);
     }
 });
-// console.log(extension)
 
 // Exportation du middleware MULTER, on lui passe l'objet stocké, la méthode single() car c'est un fichier unique et on précise que c'est une image
 module.exports = multer({ storage }).single('image');
