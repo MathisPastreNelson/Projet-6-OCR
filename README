@@ -10,7 +10,7 @@ cd Backend
 npm install
 Démarrage du Back :
 cd Backend
-nodemon server
+npm start
 
 Pense-bête : 
 Models(schéma) >> controllers(logique) >> routes(direction) >> app(execution)

@@ -1,18 +1,21 @@
 // Importation du modèle Sauce
 const Sauce = require('../models/sauces');
 
+
 exports.createSauce = (req, res, next) => {
+    const sauceObject = JSON.parse(req.body.sauce);
     const sauce = new Sauce({
-        title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        userId: req.body.userId
+        ...sauceObject,
+        likes: 0,
+        dislikes: 0,
+        usersLiked: [],
+        usersDisliked: []
     });
+    console.log(Sauce)
     sauce.save().then(
         () => {
             res.status(201).json({
-                message: 'Post saved successfully!'
+                message: 'Sauce correctement ajoutée !'
             });
         }
     ).catch(
@@ -22,9 +25,11 @@ exports.createSauce = (req, res, next) => {
             });
         }
     );
+    console.log("test")
 };
 
 exports.getOneSauce = (req, res, next) => {
+    // Recherche d'une sauce par son ID
     Sauce.findOne({
         _id: req.params.id
     }).then(
@@ -49,10 +54,10 @@ exports.modifySauce = (req, res, next) => {
         price: req.body.price,
         userId: req.body.userId
     });
-    Sauce.updateOne({ _id: req.params.id }, thing).then(
+    sauce.updateOne({ _id: req.params.id }, thing).then(
         () => {
             res.status(201).json({
-                message: 'Sauce updated successfully!'
+                message: 'Sauce mise à jour !!'
             });
         }
     ).catch(
@@ -68,7 +73,7 @@ exports.deleteSauce = (req, res, next) => {
     Sauce.deleteOne({ _id: req.params.id }).then(
         () => {
             res.status(200).json({
-                message: 'Deleted!'
+                message: 'Sauce supprimée !'
             });
         }
     ).catch(
@@ -81,6 +86,7 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.getAllSauce = (req, res, next) => {
+    // Recherche des sauces dans la collection
     Sauce.find().then(
         (Sauces) => {
             res.status(200).json(Sauces);

@@ -10,10 +10,6 @@ const sauceCtrl = require("../controllers/sauces");
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
-router.get('/', sauceCtrl.getAllSauce);
-router.post('/', sauceCtrl.createSauce);
-router.get('/:id', sauceCtrl.getOneSauce);
-router.put('/:id', sauceCtrl.modifySauce);
-router.delete('/:id', sauceCtrl.deleteSauce);
 
 module.exports = router;
+// console.log("USER ROUTE", userCtrl)

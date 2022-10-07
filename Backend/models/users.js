@@ -15,3 +15,4 @@ userSchema.plugin(uniqueValidator);
 
 // Exporté dans controllers
 module.exports = mongoose.model('User', userSchema);
+

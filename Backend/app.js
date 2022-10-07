@@ -2,6 +2,7 @@
 const express = require('express');
 // La variable mongoose nous permettra d'utiliser les fonctionnalités du module mongoose.
 const mongoose = require('mongoose');
+let bodyParser = require('body-parser')
 
 // Routeurs
 const userRoutes = require("./routes/users")
@@ -11,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 // Connection à MongoDB
-mongoose.connect('mongodb+srv://Mathis:So82HFGZ0ZvNRN9c@atlascluster.1hkdzyx.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Mathis:So82HFGZ0ZvNRN9c@atlascluster.1hkdzyx.mongodb.net/Piquante?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -28,8 +29,14 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+app.use(bodyParser.json());
 
+
+
+app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth", userRoutes);
-// app.use("api/sauces", sauceRoutes);
 
 module.exports = app;
+
+// console.log("SAUCE ROUTE", sauceRoutes)
+// console.log("USER ROUTE", userRoutes)
