@@ -2,15 +2,13 @@
 const express = require('express');
 // La variable mongoose nous permettra d'utiliser les fonctionnalités du module mongoose.
 const mongoose = require('mongoose');
-let bodyParser = require('body-parser')
+const path = require("path");
 
 // Routeurs
 const userRoutes = require("./routes/users")
 const sauceRoutes = require("./routes/sauces")
 
 const app = express();
-// Intercepte les reqûetes  contenant un content-type JSON et met le contenu dans req.body
-app.use(express.json());
 
 // Connection à MongoDB
 mongoose.connect('mongodb+srv://Mathis:So82HFGZ0ZvNRN9c@atlascluster.1hkdzyx.mongodb.net/Piquante?retryWrites=true&w=majority',
@@ -34,11 +32,11 @@ app.use((req, res, next) => {
     console.log(res.path)
     next();
 });
+// Intercepte les reqûetes  contenant un content-type JSON et met le contenu dans req.body
+app.use(express.json());
 
 app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth", userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
-
-// console.log("SAUCE ROUTE", sauceRoutes)
-// console.log("USER ROUTE", userRoutes)

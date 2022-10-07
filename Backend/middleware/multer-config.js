@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
         // L'extension du fichier sera traduit en élément du dictionnaire
         const extension = MIME_TYPES[file.mimetype];
         // Création du filename + timestamp + extension du fichier
-        callback(null, name + '_' + Date.now() + extension);
+        callback(null, name + '_' + Date.now() + "." + extension);
     }
 });
 
