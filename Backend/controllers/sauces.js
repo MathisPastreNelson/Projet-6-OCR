@@ -3,9 +3,8 @@ const Sauce = require('../models/sauces');
 
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
-    console.log("Non Parsé", req.body)
-    const sauceObject = JSON.parse(req.body);
-    console.log("Parsed", sauceObject);
+    const sauceObject = JSON.parse(req.body.sauce);
+    console.log("Sauce Crée : ", sauceObject);
     delete sauceObject._id;
     const sauce = new Sauce({
         ...sauceObject,
@@ -32,8 +31,9 @@ exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({
         _id: req.params.id
     }).then(
-        (thing) => {
-            res.status(200).json(thing);
+        (Sauces) => {
+            res.status(200).json(Sauces);
+            console.log(Sauces)
         }
     ).catch(
         (error) => {
