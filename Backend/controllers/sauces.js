@@ -27,10 +27,10 @@ exports.createSauce = (req, res, next) => {
 exports.getOneSauce = (req, res, next) => {
     // Recherche d'une sauce par son ID
     Sauce.findOne({ _id: req.params.id })
-        .then((thing) => {
-            res.status(200).json(thing);
+        .then((object) => {
+            res.status(200).json(object);
             console.log("PARAMSID : ", req.params.id)
-            console.log("ObjetComplet : ", thing)
+            console.log("ObjetComplet : ", object)
         })
         .catch((error) => {
             res.status(404).json({

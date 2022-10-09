@@ -22,9 +22,9 @@ const sauceSchema = mongoose.Schema({
     // Nombre d'utilisateurs qui n'aiment pas la sauce
     dislikes: { type: Number, required: false, default: 0 },
     // Tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
-    usersLiked: { type: String, required: false },  //userId
+    usersLiked: { type: [String], required: false },  //userId
     // Tableau des identifiants de utilisateurs qui n'ont pas aimé (= disliked) la sauce
-    usersDisliked: { type: String, required: false }  //userId
+    usersDisliked: { type: [String], required: false }  //userId
 });
 
 // Exporté dans controllers
