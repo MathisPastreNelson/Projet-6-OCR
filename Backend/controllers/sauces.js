@@ -1,5 +1,7 @@
 // Importation du modèle Sauce
 const Sauce = require('../models/sauces');
+// Permet la suppression de l'image multé
+const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
@@ -61,17 +63,17 @@ exports.modifySauce = (req, res, next) => {
 };
 
 exports.deleteSauce = (req, res, next) => {
-    Sauce.deleteOne({ _id: req.params.id }).then(() => {
-        res.status(200).json({
-            message: 'Sauce supprimée !'
-        });
-    })
-        .catch(
-            (error) => {
-                res.status(400).json({
-                    error: error
-                });
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            console.log(sauce.imageUrl)
+            const filename = sauce.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                Sauce.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Sauce supprimé !' }))
+                    .catch(error => res.status(400).json({ error }));
             });
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
 exports.getAllSauce = (req, res, next) => {
