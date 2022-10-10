@@ -42,23 +42,25 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-    const sauce = new Sauce({
-        _id: req.params.id,
-        title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        userId: req.body.userId
-    });
-    sauce.updateOne({ _id: req.params.id }, sauce).then(() => {
-        res.status(201).json({
-            message: 'Sauce mise à jour !!'
-        });
-    })
+    const sauceObject = req.file ? {
+        ...JSON.parse(req.body.thing),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body };
+
+    delete sauceObject._userId;
+    Sauce.findOne({ _id: req.params.id })
+        .then((thing) => {
+            // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce
+            if (thing.userId != req.auth.userId) {
+                res.status(401).json({ message: 'Non autorisé(e)' });
+            } else {
+                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Sauce modifiée!' }))
+                    .catch(error => res.status(401).json({ error }));
+            }
+        })
         .catch((error) => {
-            res.status(400).json({
-                error: error
-            });
+            res.status(400).json({ error });
         });
 };
 
