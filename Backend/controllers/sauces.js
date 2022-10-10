@@ -6,7 +6,7 @@ const fs = require('fs');
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
     const sauceObject = JSON.parse(req.body.sauce);
-    console.log("Sauce Crée : ", sauceObject);
+    console.log("Sauce Crée log  : ", sauceObject);
     delete sauceObject._id;
     const sauce = new Sauce({
         ...sauceObject,
@@ -31,8 +31,8 @@ exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then((object) => {
             res.status(200).json(object);
-            console.log("PARAMSID : ", req.params.id)
-            console.log("ObjetComplet : ", object)
+            console.log("PARAMSID : ", JSON.stringify(object.name))
+            console.log("ObjetComplet log : ", object)
         })
         .catch((error) => {
             res.status(404).json({
@@ -46,8 +46,8 @@ exports.modifySauce = (req, res, next) => {
         ...JSON.parse(req.body.thing),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-
     delete sauceObject._userId;
+    console.log("sauce modifiée log : ", sauceObject)
     Sauce.findOne({ _id: req.params.id })
         .then((thing) => {
             // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce
