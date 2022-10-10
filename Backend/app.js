@@ -31,7 +31,9 @@ app.use((req, res, next) => {
 // Intercepte les reqûetes  contenant un content-type JSON et met le contenu dans req.body
 app.use(express.json());
 
+// Le chemin statique des images
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth", userRoutes);
 

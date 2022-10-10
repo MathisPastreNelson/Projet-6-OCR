@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // Modèle de sauce
 const sauceSchema = mongoose.Schema({
     // L'identifiant unique de l'utilisateur 
-    userId: { type: String, required: true, unique: true },
+    userId: { type: String, required: true },
     // Nom de la sauce
     name: { type: String, required: true },
     // Fabricant de la sauce
@@ -18,13 +18,13 @@ const sauceSchema = mongoose.Schema({
     // Nombre entre 1 et 10 décrivant la sauce
     heat: { type: Number, required: true },
     // Nombre d'utilisateurs qui aiment la sauce
-    likes: { type: Number, required: false, default: 0 },
+    likes: { type: Number, required: true, default: 0 },
     // Nombre d'utilisateurs qui n'aiment pas la sauce
-    dislikes: { type: Number, required: false, default: 0 },
+    dislikes: { type: Number, required: true, default: 0 },
     // Tableau des identifiants des utilisateurs qui ont aimé(= liked) la sauce
-    usersLiked: { type: [String], required: false },  //userId
+    usersLiked: { type: [String], required: true },  //userId
     // Tableau des identifiants de utilisateurs qui n'ont pas aimé (= disliked) la sauce
-    usersDisliked: { type: [String], required: false }  //userId
+    usersDisliked: { type: [String], required: true }  //userId
 });
 
 // Exporté dans controllers
