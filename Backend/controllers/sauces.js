@@ -45,11 +45,11 @@ exports.getOneSauce = (req, res, next) => {
 
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {
-        ...JSON.parse(req.body.thing),
+        ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
     delete sauceObject._userId;
-    console.log("sauce modifiée log : ", sauceObject)
+    console.log("sauce modifiée log : ", req.body.sauce)
     Sauce.findOne({ _id: req.params.id })
         .then((thing) => {
             // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce
