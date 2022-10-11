@@ -1,7 +1,8 @@
-// La variable express nous permettra d'utiliser les fonctionnalités du module Express. 
+// La variable express nous permet d'utiliser les fonctionnalités du module Express. 
 const express = require('express');
-// La variable mongoose nous permettra d'utiliser les fonctionnalités du module mongoose.
+// La variable mongoose nous permet d'utiliser les fonctionnalités du module mongoose.
 const mongoose = require('mongoose');
+// La variable path nous permet d'utiliser les fonctionnalités du module path.
 const path = require("path");
 
 // Routeurs
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-// Intercepte les reqûetes  contenant un content-type JSON et met le contenu dans req.body
+// Intercepte les requetes  contenant un content-type JSON et met le contenu dans req.body
 app.use(express.json());
 
 // Le chemin statique des images

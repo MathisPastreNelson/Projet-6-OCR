@@ -7,7 +7,9 @@ exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
     const sauceObject = JSON.parse(req.body.sauce);
     console.log("Sauce Crée log  : ", sauceObject);
-    delete sauceObject._id;
+    console.log("1", sauceObject._id)
+    // delete sauceObject._id;
+    console.log("2", sauceObject._id)
     const sauce = new Sauce({
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
