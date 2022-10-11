@@ -6,10 +6,10 @@ const fs = require('fs');
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
     const sauceObject = JSON.parse(req.body.sauce);
-    console.log("Sauce Crée log  : ", sauceObject);
-    console.log("1", sauceObject._id)
+    // console.log("Sauce Crée log  : ", sauceObject);
+    // console.log("1", sauceObject._id)
     // delete sauceObject._id;
-    console.log("2", sauceObject._id)
+    // console.log("2", sauceObject._id)
     const sauce = new Sauce({
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -33,8 +33,8 @@ exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then((object) => {
             res.status(200).json(object);
-            console.log("PARAMSID : ", JSON.stringify(object.name))
-            console.log("ObjetComplet log : ", object)
+            // console.log("PARAMSID : ", JSON.stringify(object.name))
+            // console.log("ObjetComplet log : ", object)
         })
         .catch((error) => {
             res.status(404).json({
