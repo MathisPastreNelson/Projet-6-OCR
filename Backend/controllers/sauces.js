@@ -8,9 +8,7 @@ exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
     const sauceObject = JSON.parse(req.body.sauce);
     // console.log("Sauce Crée log  : ", sauceObject);
-    // console.log("1", sauceObject._id)
     // delete sauceObject._id;
-    // console.log("2", sauceObject._id)
     const sauce = new Sauce({
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -32,10 +30,8 @@ exports.createSauce = (req, res, next) => {
 exports.getOneSauce = (req, res, next) => {
     // Recherche d'une sauce par son ID
     Sauce.findOne({ _id: req.params.id })
-        .then((object) => {
-            res.status(200).json(object);
-            // console.log("PARAMSID : ", JSON.stringify(object.name))
-            // console.log("ObjetComplet log : ", object)
+        .then((sauce) => {
+            res.status(200).json(sauce);
         })
         .catch((error) => {
             res.status(404).json({
@@ -53,10 +49,10 @@ exports.modifySauce = (req, res, next) => {
     console.log("image modifiée = ", req.file)
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce la reqûete est rejettée
+            // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce la reqûete est rejetée
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: 'Non autorisé(e)' });
-                // Si l'image a été modifiée on supprime l'ancienne du back
+                res.status(401).json({ message: 'Non autorisé(e) à modifier cette sauce !' });
+                // Si l'image a été modifiée on supprime celle anciennement utilisée du dossier images
             } else if (req.file != undefined) {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
@@ -64,11 +60,10 @@ exports.modifySauce = (req, res, next) => {
                         .then(() => res.status(200).json({ message: 'Sauce modifiée!' }))
                         .catch(error => res.status(401).json({ error }));
                 })
-            }
-            // Si l'image n'a pas été modifié on change uniquement les données
-            else {
+                // Si l'image n'a pas été modifié on change uniquement les données
+            } else {
                 Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Sauce modifiée mais pas photo!' }))
+                    .then(() => res.status(200).json({ message: 'Sauce modifiée mais pas la photo !' }))
                     .catch(error => res.status(401).json({ error }));
             }
         })
@@ -80,9 +75,11 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
+            // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce la reqûete est rejetée
             if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: 'Non autorisé(e)' });
+                res.status(401).json({ message: 'Non autorisé(e) à supprimer cette sauce !' });
             } else {
+                // Suppression de l'image dans le dossier images
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({ _id: req.params.id })
