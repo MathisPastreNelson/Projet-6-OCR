@@ -63,7 +63,7 @@ exports.modifySauce = (req, res, next) => {
                 // Si l'image n'a pas été modifié on change uniquement les données
             } else {
                 Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Sauce modifiée mais pas la photo !' }))
+                    .then(() => res.status(200).json({ message: 'Sauce modifiée, la photo n\'a pas été changée !' }))
                     .catch(error => res.status(401).json({ error }));
             }
         })
@@ -147,11 +147,8 @@ exports.likeSauce = (req, res, next) => {
             // Like = -1 (dislikes = +1)
 
             // Like = 0 (dislikes = 0, sans vote)
-
-
         })
         .catch((error) => res.status(404).json({ error }));
-
 };
 
 

@@ -22,6 +22,7 @@ Packages utilisés dans le projet :
 "mongoose"
 "mongoose-unique-validator"
 "multer"
+"fs"
 
 Définition des JWT :
 Un JSON Web Token est un access token Les JSON Web Token sont particulièrement appréciés pour les opérations d’identification.
@@ -31,3 +32,6 @@ Les tokens JWT sont sécurisés parce que :
 - Il n'y a pas de session stockée sur le serveur qui pourrait être détournée.
 - Leur payload encodé peut contenir des données qui permettent de vérifier que l'utilisateur connecté n'utilise pas le token de quelqu'un d'autre.
 - Ils sont très difficiles à fausser sans connaître la clé secrète.
+
+L'opérateur de décomposition ou le spread opérator (...) permet :
+Il permet de décomposer un tableau (Array)
