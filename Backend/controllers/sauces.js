@@ -2,7 +2,7 @@
 const Sauce = require('../models/sauces');
 // Importation de FS pour accéder aux fichier du serveur (les photos des sauces)
 const fs = require('fs');
-console.log("fs test = ", fs.link)
+// console.log("fs test = ", fs.link)
 
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
@@ -83,7 +83,7 @@ exports.deleteSauce = (req, res, next) => {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({ _id: req.params.id })
-                        .then(() => { res.status(200).json({ message: 'Sauce supprimé !' }) })
+                        .then(() => { res.status(200).json({ message: 'Sauce supprimée !' }) })
                         .catch(error => res.status(401).json({ error }));
                 });
             }
@@ -106,3 +106,37 @@ exports.getAllSauce = (req, res, next) => {
                 });
             });
 };
+
+
+// Essai de like/dislike
+exports.likeSauce = (req, res, next) => {
+    console.log("Je suis dans le controller like")
+
+    // Affichage du req.body
+    console.log("--->Contenu req.body --Ctrl Like")
+    console.log(req.body)
+
+    // Récupéré l'id dans l'url de la requête
+    console.log("--->Contenu req.params --Ctrl Like")
+    console.log(req.params)
+
+    // Mise au format de l'id pour pouvoir aller chercher l'objet correspondant dans la base de données
+    console.log("--->id en _id --Ctrl Like")
+    console.log({ _id: req.params.id })
+
+    // Aller chercher l'objet dans la DB
+    Sauce.findOne()
+        .then((sauce) => {
+            res.status(200).json(sauce)
+        })
+        .catch((error) => res.status(404).json({ error }));
+    // Like = 1 (likes = +1)
+
+    // Like = 0 (dislikes = 0, sans vote)
+
+    // Like = -1 (dislikes = +1)
+
+    // Like = 0 (dislikes = 0, sans vote)
+};
+
+
