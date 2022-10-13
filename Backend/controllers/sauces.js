@@ -26,7 +26,7 @@ exports.createSauce = (req, res, next) => {
 };
 
 exports.getOneSauce = (req, res, next) => {
-    // Recherche d'une sauce par son ID
+    // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
             res.status(200).json(sauce);
@@ -47,8 +47,10 @@ exports.modifySauce = (req, res, next) => {
     } : { ...req.body };
     // delete sauceObject._userId;
     console.log("image modifiée = ", req.file)
+    // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
+            console.log("image modifiée = ", req.file)
             // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce la reqûete est rejetée
             if (sauce.userId != req.auth.userId) {
                 res.status(401).json({ message: 'Non autorisé(e) à modifier cette sauce !' });
@@ -73,6 +75,7 @@ exports.modifySauce = (req, res, next) => {
 };
 
 exports.deleteSauce = (req, res, next) => {
+    // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             // Si l'userID modifiant la sauce ne correspond pas à l'userID qui a crée la sauce la reqûete est rejetée
@@ -121,32 +124,68 @@ exports.likeSauce = (req, res, next) => {
     console.log("--->id en _id --Ctrl Like")
     console.log({ _id: req.params.id })
 
-    // Aller chercher l'objet dans la DB
-    Sauce.findOne()
+    // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
+    Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            console.log("--> Contenu resultat promise : Objet --Ctrl Like", sauce);
-            // Like = 1 (likes = +1)
-            // Utilisation de la méthode javascript includes()
-            // Utilisation de la méthode $inc (mongoDB)
-            // Utilisation de la méthode $push  (mongoDB)
+            console.log("--> Le like sauce = ", req.body.like);
             // Utilisation de la méthode $pull (mongoDB)
+            // Utilisation de la méthode javascript includes()
+            // Like = +1 si l'utilisateur n'est pas dans [usersLiked] DB et execute une requete like a 1 (ajoute un like)
             if (!sauce.usersLiked.includes(req.body.userId) && req.body.like === 1) {
-                console.log("--> L'utilisateur n'est pas dans usersLiked DB et execute une requete like a 1");
                 // Mise à jour DB
                 Sauce.updateOne({ _id: req.params.id },
                     {
+                        // Utilisation de la méthode $inc (mongoDB)
                         $inc: { likes: 1 },
+                        // Utilisation de la méthode $push  (mongoDB)
                         $push: { usersLiked: req.body.userId }
                     }
                 )
                     .then(() => res.status(201).json({ message: "Like + 1" }))
                     .catch((error) => res.status(400).json({ error }));
             }
-            // Like = 0 (likes = 0, sans vote)
-
-            // Like = -1 (dislikes = +1)
-
-            // Like = 0 (dislikes = 0, sans vote)
+            // Like = 0 si l'utilisateur est dans [usersLiked] DB et execute une requete like a 0 (enlève son like)
+            if (sauce.usersLiked.includes(req.body.userId) && req.body.like === 0) {
+                // Mise à jour DB
+                Sauce.updateOne({ _id: req.params.id },
+                    {
+                        // Utilisation de la méthode $inc (mongoDB)
+                        $inc: { likes: -1 },
+                        // Utilisation de la méthode $push  (mongoDB)
+                        $pull: { usersLiked: req.body.userId }
+                    }
+                )
+                    .then(() => res.status(201).json({ message: "Like = 0" }))
+                    .catch((error) => res.status(400).json({ error }));
+            }
+            // disLike = +1 si l'utilisateur n'est pas dans [usersLiked] DB et execute une requete disLike a 1 (ajoute un disLike)
+            if (!sauce.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
+                // Mise à jour DB
+                Sauce.updateOne({ _id: req.params.id },
+                    {
+                        // Utilisation de la méthode $inc (mongoDB)
+                        $inc: { dislikes: 1 },
+                        // Utilisation de la méthode $push  (mongoDB)
+                        $push: { usersDisliked: req.body.userId }
+                    }
+                )
+                    .then(() => res.status(201).json({ message: "dislikes + 1" }))
+                    .catch((error) => res.status(400).json({ error }));
+            }
+            // disLike = 0 si l'utilisateur est dans [usersLiked] DB et execute une requete disLike a 0 (enlève son disLike)
+            if (sauce.usersDisliked.includes(req.body.userId) && req.body.like === 0) {
+                // Mise à jour DB
+                Sauce.updateOne({ _id: req.params.id },
+                    {
+                        // Utilisation de la méthode $inc (mongoDB)
+                        $inc: { dislikes: -1 },
+                        // Utilisation de la méthode $push  (mongoDB)
+                        $pull: { usersDisliked: req.body.userId }
+                    }
+                )
+                    .then(() => res.status(201).json({ message: "dislikes - 1" }))
+                    .catch((error) => res.status(400).json({ error }));
+            }
         })
         .catch((error) => res.status(404).json({ error }));
 };
