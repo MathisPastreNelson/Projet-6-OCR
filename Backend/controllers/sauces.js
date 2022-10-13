@@ -7,12 +7,10 @@ const fs = require('fs');
 exports.createSauce = (req, res, next) => {
     // Les données du formulaire de création vont dans une nouvelle sauce
     const sauceObject = JSON.parse(req.body.sauce);
-    // console.log("Sauce Crée log  : ", sauceObject);
-    // delete sauceObject._id;
+    // console.log("Sauce Crée log  : ", sauceObject)
     const sauce = new Sauce({
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        // _id: sauceObject._id
     });
     // Je sauvegarde la nouvelle sauce dans DB
     sauce.save().then(() => {
@@ -41,8 +39,10 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
+    // Constante stockant l'objet sauce qui sera utilisé lors la méthode updateOne
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
+        // ImageUrl représente http://localhost:3000/images/imageNom par défaut
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
     // delete sauceObject._userId;
