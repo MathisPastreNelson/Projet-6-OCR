@@ -23,6 +23,7 @@ Packages utilisés dans le projet :
 "mongoose-unique-validator"
 "multer"
 "fs"
+"helmet"
 
 Définition des JWT :
 Un JSON Web Token est un access token Les JSON Web Token sont particulièrement appréciés pour les opérations d’identification.
@@ -32,6 +33,12 @@ Les tokens JWT sont sécurisés parce que :
 - Il n'y a pas de session stockée sur le serveur qui pourrait être détournée.
 - Leur payload encodé peut contenir des données qui permettent de vérifier que l'utilisateur connecté n'utilise pas le token de quelqu'un d'autre.
 - Ils sont très difficiles à fausser sans connaître la clé secrète.
+
+Que fait Helmet : 
+Helmet.js est un module Node.js qui aide à sécuriser les en-têtes HTTP. Il est implémenté dans des applications express.
+Par conséquent, nous pouvons dire que helmet.js aide à sécuriser les applications express.
+Étant donné que les en-têtes HTTP peuvent divulguer des informations sensibles sur l’application, il est donc important
+d’utiliser les en-têtes de manière sécurisée.
 
 L'opérateur de décomposition ou le spread opérator (...) permet :
 Il permet de décomposer un tableau (Array)

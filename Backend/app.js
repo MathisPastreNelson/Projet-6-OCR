@@ -4,6 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 // La variable path nous permet d'utiliser les fonctionnalités du module path.
 const path = require("path");
+// La variable helmet  nous permet d'utiliser les fonctionnalités du module helmet.
+const helmet = require('helmet')
 
 // Routeurs
 const userRoutes = require("./routes/users")
@@ -31,6 +33,15 @@ app.use((req, res, next) => {
 });
 // Intercepte les requetes  contenant un content-type JSON et met le contenu dans req.body
 app.use(express.json());
+
+// Helmet sécurise les en-tête HTTP
+app.use(
+    helmet({
+        contentSecurityPolicy: false,
+        crossOriginResourcePolicy: false,
+        crossOriginEmbedderPolicy: false,
+    }),
+);
 
 // Le chemin statique des images
 app.use('/images', express.static(path.join(__dirname, 'images')));
