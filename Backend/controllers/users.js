@@ -7,7 +7,7 @@ const User = require('../models/users');
 
 // Signup de l'utilisateur - Exporté dans routes
 exports.signup = (req, res, next) => {
-    // Le package bcrpyt permet un cryptage sécurisé
+    // Le package bcrpyt permet un cryptage sécurisé du mot de passe
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({

@@ -85,6 +85,7 @@ exports.deleteSauce = (req, res, next) => {
                 // Suppression de l'image dans le dossier images
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
+                    // Suppression des données dans la DB
                     Sauce.deleteOne({ _id: req.params.id })
                         .then(() => { res.status(200).json({ message: 'Sauce supprimée !' }) })
                         .catch(error => res.status(401).json({ error }));
@@ -97,7 +98,7 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.getAllSauce = (req, res, next) => {
-    // Recherche des sauces dans la collection
+    // Recherche des sauces dans la collection de la DB
     Sauce.find().then(
         (Sauces) => {
             res.status(200).json(Sauces);
@@ -113,21 +114,16 @@ exports.getAllSauce = (req, res, next) => {
 
 // Essai de like/dislike
 exports.likeSauce = (req, res, next) => {
-    console.log("Je suis dans le controller like")
     // Affichage du req.body
-    console.log("--->Contenu req.body --Ctrl Like")
+    console.log("-->req.body/Ctrl Like")
     console.log(req.body)
-    // Récupéré l'id dans l'url de la requête
-    console.log("--->Contenu req.params --Ctrl Like")
-    console.log(req.params)
     // Mise au format de l'id pour pouvoir aller chercher l'objet correspondant dans la base de données
-    console.log("--->id en _id --Ctrl Like")
+    console.log("-->req.params/Ctrl Like")
     console.log({ _id: req.params.id })
 
     // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            console.log("--> Le like sauce = ", req.body.like);
             // Utilisation de la méthode $pull (mongoDB)
             // Utilisation de la méthode javascript includes()
             // Like = +1 si l'utilisateur n'est pas dans [usersLiked] DB et execute une requete like a 1 (ajoute un like)
@@ -141,7 +137,7 @@ exports.likeSauce = (req, res, next) => {
                         $push: { usersLiked: req.body.userId }
                     }
                 )
-                    .then(() => res.status(201).json({ message: "Like + 1" }))
+                    .then(() => res.status(201).json({ message: "like de la sauce" }))
                     .catch((error) => res.status(400).json({ error }));
             }
             // Like = 0 si l'utilisateur est dans [usersLiked] DB et execute une requete like a 0 (enlève son like)
@@ -151,11 +147,11 @@ exports.likeSauce = (req, res, next) => {
                     {
                         // Utilisation de la méthode $inc (mongoDB)
                         $inc: { likes: -1 },
-                        // Utilisation de la méthode $push  (mongoDB)
+                        // Utilisation de la méthode $pull  (mongoDB)
                         $pull: { usersLiked: req.body.userId }
                     }
                 )
-                    .then(() => res.status(201).json({ message: "Like = 0" }))
+                    .then(() => res.status(201).json({ message: "like annulé" }))
                     .catch((error) => res.status(400).json({ error }));
             }
             // disLike = +1 si l'utilisateur n'est pas dans [usersLiked] DB et execute une requete disLike a 1 (ajoute un disLike)
@@ -169,7 +165,7 @@ exports.likeSauce = (req, res, next) => {
                         $push: { usersDisliked: req.body.userId }
                     }
                 )
-                    .then(() => res.status(201).json({ message: "dislikes + 1" }))
+                    .then(() => res.status(201).json({ message: "dislike de la sauce" }))
                     .catch((error) => res.status(400).json({ error }));
             }
             // disLike = 0 si l'utilisateur est dans [usersLiked] DB et execute une requete disLike a 0 (enlève son disLike)
@@ -179,11 +175,11 @@ exports.likeSauce = (req, res, next) => {
                     {
                         // Utilisation de la méthode $inc (mongoDB)
                         $inc: { dislikes: -1 },
-                        // Utilisation de la méthode $push  (mongoDB)
+                        // Utilisation de la méthode $pull  (mongoDB)
                         $pull: { usersDisliked: req.body.userId }
                     }
                 )
-                    .then(() => res.status(201).json({ message: "dislikes - 1" }))
+                    .then(() => res.status(201).json({ message: "dislike annulé" }))
                     .catch((error) => res.status(400).json({ error }));
             }
         })

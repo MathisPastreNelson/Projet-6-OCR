@@ -49,5 +49,5 @@ server.on('listening', () => {
     console.log('Serveur démarré sur ' + bind);
 });
 
-// Le serveur est configuré pour écouter le port 3000
+// Le serveur est configuré pour écouter le port 3000 par defaut
 server.listen(port);
