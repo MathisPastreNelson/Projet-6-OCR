@@ -111,8 +111,6 @@ exports.getAllSauce = (req, res, next) => {
             });
 };
 
-
-// Essai de like/dislike
 exports.likeSauce = (req, res, next) => {
     // Affichage du req.body
     console.log("-->req.body/Ctrl Like")
