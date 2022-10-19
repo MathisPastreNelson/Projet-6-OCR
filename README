@@ -21,6 +21,3 @@ Packages utilisés dans le projet :
 "multer"
 "fs"
 "helmet"
-
-Pense-bête : 
-Models(schéma) >> controllers(logique) >> routes(direction) >> app(execution)
