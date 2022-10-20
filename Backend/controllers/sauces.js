@@ -45,7 +45,6 @@ exports.modifySauce = (req, res, next) => {
         // ImageUrl représente http://localhost:3000/images/imageNom par défaut
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-    // delete sauceObject._userId;
     console.log("image modifiée = ", req.file)
     // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
