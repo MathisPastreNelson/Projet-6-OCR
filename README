@@ -1,3 +1,6 @@
+Le dossier Frontend contient le projet originel 
+Le dossier Backend contient mon travail
+
 Installation du Front  :
 cd Frontend
 npm install
@@ -11,13 +14,3 @@ npm install
 Démarrage du Back :
 cd Backend
 npm start
-
-Packages utilisés dans le projet : 
-"bcrypt"
-"express"
-"jsonwebtoken"
-"mongoose"
-"mongoose-unique-validator"
-"multer"
-"fs"
-"helmet"
