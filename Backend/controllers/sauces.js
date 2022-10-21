@@ -39,7 +39,7 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-    // Constante stockant l'objet sauce qui sera utilisé lors la méthode updateOne
+    // Verifie que req.file existe (nouvelle image), si oui on traite l'image sinon juste l'objet entrant
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
         // ImageUrl représente http://localhost:3000/images/imageNom par défaut
@@ -121,7 +121,6 @@ exports.likeSauce = (req, res, next) => {
     // Aller chercher la sauce correspondant à l'iD de l'url dans la DB 
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            // Utilisation de la méthode $pull (mongoDB)
             // Utilisation de la méthode javascript includes()
             // Like = +1 si l'utilisateur n'est pas dans [usersLiked] DB et execute une requete like a 1 (ajoute un like)
             if (!sauce.usersLiked.includes(req.body.userId) && req.body.like === 1) {
