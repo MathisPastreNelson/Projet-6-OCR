@@ -57,6 +57,7 @@ exports.modifySauce = (req, res, next) => {
             } else if (req.file != undefined) {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
+                    // Puis on prend en compte les données
                     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
                         .then(() => res.status(200).json({ message: 'Sauce modifiée, nouvelle photo active !' }))
                         .catch(error => res.status(401).json({ error }));
