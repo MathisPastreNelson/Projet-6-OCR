@@ -31,10 +31,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-// Intercepte les requetes  contenant un content-type JSON et met le contenu dans req.body
+
+// Middleware qui traduit toutes les requêtes en JSON (req.body)
 app.use(express.json());
 
-// Application d'Helmet sur toutes les routes
+// Application d'Helmet sur toutes les requêtes
 app.use(
     helmet({
         contentSecurityPolicy: false,
